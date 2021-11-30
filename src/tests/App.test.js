@@ -76,4 +76,3 @@ página Not Found ao entrar em uma URL desconhecida.`, async () => {
   const notFoundText = screen.getByRole('heading', { name: /Page requested not found/i });
   expect(notFoundText).toBeInTheDocument();
 });
-
