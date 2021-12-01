@@ -99,9 +99,25 @@ describe('Teste se a Pokédex tem os botões de filtro.', () => {
   });
 });
 
+describe('Teste se a Pokédex contém um botão para resetar o filtro', () => {
+  beforeEach(() => {
+    renderWithRouter(<App />);
+  });
 
+  test('O texto do botão deve ser All;', () => {
+    const buttonAll = screen.getByRole('button', { name: /all/i });
+    expect(buttonAll).toBeInTheDocument();
+  });
 
-// Teste se a Pokédex contém um botão para resetar o filtro
-// O texto do botão deve ser All;
-// A Pokedéx deverá mostrar os Pokémons normalmente (sem filtros) quando o botão All for clicado;
-// Ao carregar a página, o filtro selecionado deverá ser All;
+  test(`A Pokedéx deverá mostrar os Pokémons normalmente
+  (sem filtros) quando o botão All for clicado;`, () => {
+    const buttonAll = screen.getByRole('button', { name: /all/i });
+    userEvent.click(buttonAll);
+    const nextButton = screen.getByRole('button', { name: /próximo/i });
+    const noFiltePokemonName = screen.getByTestId('pokemon-name');
+    pokemons.forEach((pokemon) => {
+      expect(noFiltePokemonName).toHaveTextContent(pokemon.name);
+      userEvent.click(nextButton);
+    });
+  });
+});
